@@ -78,9 +78,9 @@ jobs:
         curl -O https://muslcc.netlify.app/${{ matrix.target }}-cross.tgz
         tar xzf ${{ matrix.target }}-cross.tgz -C /opt
     - name: add compiler to PATH
-    - run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
+      run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
     - name: Echo gcc version
-    - run: ${{ matrix.target }}-gcc --verbose
+      run: ${{ matrix.target }}-gcc --verbose
     - name: build binary
       run: |
         CFLAGS="-static -O2" ${{ env.CC }} main.c -o hello
