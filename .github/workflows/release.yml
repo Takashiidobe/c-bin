@@ -6,7 +6,7 @@ on:
       - '*'
 
 jobs:
-  build_cosmopolitan:
+  build:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
@@ -23,7 +23,7 @@ jobs:
     - run: ${{ matrix.target }}-gcc --version
     - name: build binary
       run: |
-        CFLAGS="-static" make
+        CFLAGS="-static" cc main.c -o hello
         ${{ matrix.target }}-strip hello || true
         mv hello ${{ matrix.target }}-hello
         file ./${{ matrix.target }}-hello
