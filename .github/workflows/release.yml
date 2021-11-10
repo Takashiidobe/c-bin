@@ -20,9 +20,9 @@ jobs:
           -include cosmopolitan.h crt.o ape.o cosmopolitan.a
         objcopy -S -O binary hello.com.dbg hello.com
         file ./hello.com
-    - name: Upload the artifacts
-      uses: skx/github-action-publish-binaries@release-1.3
+    - name: Publish archives and packages
+      uses: softprops/action-gh-release@v1
+      with:
+        files: "hello.com"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        args: 'hello.com'
