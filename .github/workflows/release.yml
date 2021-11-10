@@ -12,71 +12,72 @@ jobs:
       matrix:
         target:
           [
-            aarch64-linux-musl-cross.tgz
-            # aarch64_be-linux-musl-cross.tgz
-            # arch64-linux-musl-cross.tgz
-            # arm-linux-musleabi-cross.tgz
-            # arm-linux-musleabihf-cross.tgz
-            # armeb-linux-musleabi-cross.tgz
-            # armeb-linux-musleabihf-cross.tgz
-            # armel-linux-musleabi-cross.tgz
-            # armel-linux-musleabihf-cross.tgz
-            # armv5l-linux-musleabi-cross.tgz
-            # armv5l-linux-musleabihf-cross.tgz
-            # armv6-linux-musleabihf-cross.tgz
-            # armv7l-linux-musleabihf-cross.tgz
-            # armv7m-linux-musleabi-cross.tgz
-            # armv7r-linux-musleabihf-cross.tgz
-            # h2eb-linux-musl-cross.tgz
-            # h2eb-linux-muslfdpic-cross.tgz
-            # i486-linux-musl-cross.tgz
-            # i686-linux-musl-cross.tgz
-            # i686-w64-mingw32-cross.tgz
-            # m68k-linux-musl-cross.tgz
-            # microblaze-linux-musl-cross.tgz
-            # microblazeel-linux-musl-cross.tgz
-            # mips-linux-musl-cross.tgz
-            # mips-linux-musln32sf-cross.tgz
-            # mips-linux-muslsf-cross.tgz
-            # mips64-linux-musl-cross.tgz
-            # mips64-linux-musln32-cross.tgz
-            # mips64-linux-musln32sf-cross.tgz
-            # mips64el-linux-musl-cross.tgz
-            # mips64el-linux-musln32-cross.tgz
-            # mips64el-linux-musln32sf-cross.tgz
-            # mipsel-linux-musl-cross.tgz
-            # mipsel-linux-musln32-cross.tgz
-            # mipsel-linux-musln32sf-cross.tgz
-            # mipsel-linux-muslsf-cross.tgz
-            # or1k-linux-musl-cross.tgz
-            # powerpc-linux-musl-cross.tgz
-            # powerpc-linux-muslsf-cross.tgz
-            # powerpc64-linux-musl-cross.tgz
-            # powerpc64le-linux-musl-cross.tgz
-            # powerpcle-linux-musl-cross.tgz
-            # powerpcle-linux-muslsf-cross.tgz
-            # riscv32-linux-musl-cross.tgz
-            # riscv64-linux-musl-cross.tgz
-            # s390x-linux-musl-cross.tgz
-            # sh2-linux-musl-cross.tgz
-            # sh2-linux-muslfdpic-cross.tgz
-            # sh4-linux-musl-cross.tgz
-            # sh4eb-linux-musl-cross.tgz
-            # x86_64-linux-musl-cross.tgz
-            # x86_64-linux-muslx32-cross.tgz
-            # x86_64-w64-mingw32-cross.tgz
+            aarch64-linux-musl
+            # aarch64_be-linux-musl
+            # arch64-linux-musl
+            # arm-linux-musleabi
+            # arm-linux-musleabihf
+            # armeb-linux-musleabi
+            # armeb-linux-musleabihf
+            # armel-linux-musleabi
+            # armel-linux-musleabihf
+            # armv5l-linux-musleabi
+            # armv5l-linux-musleabihf
+            # armv6-linux-musleabihf
+            # armv7l-linux-musleabihf
+            # armv7m-linux-musleabi
+            # armv7r-linux-musleabihf
+            # h2eb-linux-musl
+            # h2eb-linux-muslfdpic
+            # i486-linux-musl
+            # i686-linux-musl
+            # i686-w64-mingw32
+            # m68k-linux-musl
+            # microblaze-linux-musl
+            # microblazeel-linux-musl
+            # mips-linux-musl
+            # mips-linux-musln32sf
+            # mips-linux-muslsf
+            # mips64-linux-musl
+            # mips64-linux-musln32
+            # mips64-linux-musln32sf
+            # mips64el-linux-musl
+            # mips64el-linux-musln32
+            # mips64el-linux-musln32sf
+            # mipsel-linux-musl
+            # mipsel-linux-musln32
+            # mipsel-linux-musln32sf
+            # mipsel-linux-muslsf
+            # or1k-linux-musl
+            # powerpc-linux-musl
+            # powerpc-linux-muslsf
+            # powerpc64-linux-musl
+            # powerpc64le-linux-musl
+            # powerpcle-linux-musl
+            # powerpcle-linux-muslsf
+            # riscv32-linux-musl
+            # riscv64-linux-musl
+            # s390x-linux-musl
+            # sh2-linux-musl
+            # sh2-linux-muslfdpic
+            # sh4-linux-musl
+            # sh4eb-linux-musl
+            # x86_64-linux-musl
+            # x86_64-linux-muslx32
+            # x86_64-w64-mingw32
           ]
     env:
       CC: ${{ matrix.target }}-gcc
       STRIP: ${{ matrix.target }}-strip
       BIN_NAME: hello
       RELEASE_BIN: hello-${{ github.ref_name }}-${{ matrix.target }}
+      TARGET_ZIP: ${{ matrix.target }}-cross.tgz
     steps:
     - uses: actions/checkout@v2
     - name: Download cross compiler
       run: |
-        curl -O https://muslcc.netlify.app/${{ matrix.target }}-cross.tgz
-        tar xzf ${{ matrix.target }}-cross.tgz -C /opt
+        curl -O https://muslcc.netlify.app/${{ env.TARGET_ZIP }}
+        tar xzf ${{ env.TARGET_ZIP }} -C /opt
     - name: add compiler to PATH
       run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
     - name: Echo gcc version
