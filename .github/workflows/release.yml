@@ -20,7 +20,7 @@ jobs:
         curl -O http://musl.cc/${{ matrix.target}}-cross.tgz
         tar xzf ${{ matrix.target }}-cross.tgz -C /opt
     - run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
-    - run: ${{ matrix.target }} --version
+    - run: ${{ matrix.target }}-gcc --version
     - name: build binary
       run: |
         CFLAGS="-static" make
