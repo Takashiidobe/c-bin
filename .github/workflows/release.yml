@@ -9,10 +9,9 @@ jobs:
       matrix:
         target: [ aarch64-linux-musl ]
     env:
-      CC: ${{ matrix.target }}
+      CC: ${{ matrix.target }}-gcc
     steps:
     - uses: actions/checkout@v2
-    - run: sudo apt install -y qemu-user
     - name: Download cross compiler
       run: |
         curl -O http://musl.cc/${{ matrix.target}}-cross.tgz
