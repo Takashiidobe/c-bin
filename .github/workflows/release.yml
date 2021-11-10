@@ -70,7 +70,7 @@ jobs:
       CC: ${{ matrix.target }}-gcc
       STRIP: ${{ matrix.target }}-strip
       BIN_NAME: hello
-      RELEASE_BIN: ${{ env.BIN_NAME }}-${{ github.ref_name }}-${{ matrix.target }}
+      RELEASE_BIN: hello-${{ github.ref_name }}-${{ matrix.target }}
     steps:
     - uses: actions/checkout@v2
     - name: Download cross compiler
