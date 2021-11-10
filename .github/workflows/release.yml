@@ -8,21 +8,26 @@ on:
 jobs:
   build_cosmopolitan:
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        target: [ aarch64-linux-musl ]
+    env:
+      CC: ${{ matrix.target }}-gcc
     steps:
     - uses: actions/checkout@v2
-    - name: Build
+    - name: Download cross compiler
       run: |
-        wget https://justine.lol/cosmopolitan/cosmopolitan-amalgamation-1.0.zip
-        unzip cosmopolitan-amalgamation-1.0.zip
-        gcc -g -Os -static -nostdlib -nostdinc -fno-pie -no-pie -mno-red-zone \
-          -fno-omit-frame-pointer -pg -mnop-mcount \
-          -o hello.com.dbg main.c -fuse-ld=bfd -Wl,-T,ape.lds \
-          -include cosmopolitan.h crt.o ape.o cosmopolitan.a
-        objcopy -S -O binary hello.com.dbg hello.com
-        file ./hello.com
+        curl -O http://musl.cc/${{ matrix.target}}-cross.tgz
+        tar xzf ${{ matrix.target }}-cross.tgz -C /opt
+    - run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
+    - run: ${{ matrix.target }} --version
+    - name: build binary
+      run: |
+        CFLAGS="-static" make
+        file ./hello
     - name: Publish archives and packages
       uses: softprops/action-gh-release@v1
       with:
-        files: "hello.com"
+        files: "hello"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
