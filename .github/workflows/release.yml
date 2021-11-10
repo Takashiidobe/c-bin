@@ -1,0 +1,26 @@
+name: Release
+
+on: [push]
+
+jobs:
+  mips64_linux_gcc:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        target: [ aarch64-linux-musl ]
+    env:
+      CC: ${{ matrix.target }}
+    steps:
+    - uses: actions/checkout@v2
+    - run: sudo apt install -y qemu-user
+    - name: Download cross compiler
+      run: |
+        curl -O http://musl.cc/${{ matrix.target}}-cross.tgz
+        tar xzf ${{ matrix.target }}-cross.tgz -C /opt
+    - run: echo "::add-path::/opt/${{ matrix.target }}-cross/bin/"
+    - run: ${{ matrix.target }} --version
+    - name: Perform round-trip tests
+      run: |
+        cd tests
+        CFLAGS="-static" make
+        file ./hello
