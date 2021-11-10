@@ -17,7 +17,7 @@ jobs:
       run: |
         curl -O http://musl.cc/${{ matrix.target}}-cross.tgz
         tar xzf ${{ matrix.target }}-cross.tgz -C /opt
-    - run: echo "::add-path::/opt/${{ matrix.target }}-cross/bin/"
+    - run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
     - run: ${{ matrix.target }} --version
     - name: Perform round-trip tests
       run: |
