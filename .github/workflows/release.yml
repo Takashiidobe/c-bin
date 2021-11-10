@@ -23,7 +23,7 @@ jobs:
     - run: ${{ matrix.target }}-gcc --version
     - name: build binary
       run: |
-        CFLAGS="-static" cc main.c -o hello
+        CFLAGS="-static" ${{ matrix.target}}-gcc main.c -o hello
         ${{ matrix.target }}-strip hello || true
         mv hello ${{ matrix.target }}-hello
         file ./${{ matrix.target }}-hello
