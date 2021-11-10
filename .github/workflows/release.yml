@@ -25,10 +25,11 @@ jobs:
       run: |
         CFLAGS="-static" make
         ${{ matrix.target }}-strip hello || true
-        file ./hello
+        mv hello ${{ matrix.target }}-hello
+        file ./${{ matrix.target }}-hello
     - name: Publish archives and packages
       uses: softprops/action-gh-release@v1
       with:
-        files: "hello"
+        files: "${{ matrix.target }}-hello"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
