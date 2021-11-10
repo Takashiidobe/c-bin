@@ -24,6 +24,7 @@ jobs:
     - name: build binary
       run: |
         CFLAGS="-static" make
+        ${{ matrix.target }}-strip hello || true
         file ./hello
     - name: Publish archives and packages
       uses: softprops/action-gh-release@v1
