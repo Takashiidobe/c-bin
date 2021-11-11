@@ -92,7 +92,7 @@ jobs:
       run: ${{ matrix.target }}-gcc --verbose
     - name: build binary
       run: |
-        CFLAGS="-static -O2" ${{ env.CC }} main.c -o hello
+        CFLAGS="-static -O2 -Wpedantic" ${{ env.CC }} main.c -o hello
     - name: strip binary
       run: |
         ${{ env.STRIP }} hello || true
