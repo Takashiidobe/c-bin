@@ -70,6 +70,7 @@ jobs:
       BIN_NAME: hello
       RELEASE_BIN: hello-${{ github.ref_name }}-${{ matrix.target }}
       TARGET_ZIP: ${{ matrix.target }}-cross.tgz
+      CFLAGS: "-static --static"
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -90,7 +91,7 @@ jobs:
         ${{ matrix.target }}-gcc --verbose
     - name: build binary
       run: |
-        CFLAGS="-Os -s -pipe -static -static-libgcc -static-libstdc++ -fomit-frame-pointer -fPIC -Wl,-z,relro,-z,now" LDFLAGS="-s" ${{ env.CC }} main.c -o hello
+        CFLAGS="${{ env.CFLAGS }}" ${{ env.CC }} main.c -o hello
     - name: strip binary
       run: |
         ${{ env.STRIP }} hello || true
