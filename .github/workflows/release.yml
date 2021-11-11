@@ -77,14 +77,12 @@ jobs:
     - uses: actions/cache@v2
       id: cache
       with:
-        path: ${{ env.TARGET_ZIP }}
+        path: /opt/${{ matrix.target }}-cross
         key: ${{ matrix.target }}
-    - name: Download cross compiler
+    - name: setup cross compiler
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
         curl -O https://muslcc.netlify.app/${{ env.TARGET_ZIP }}
-    - name: Unzip cross compiler
-      run: |
         tar xzf ${{ env.TARGET_ZIP }} -C /opt
     - name: add compiler to PATH
       run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
