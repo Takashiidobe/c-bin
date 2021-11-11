@@ -76,7 +76,7 @@ jobs:
       id: cache
       with:
         path: /opt/${{ matrix.target }}-cross
-        key: ${{ matrix.target }}
+        key: ${{ env.CC }}
     - name: setup cross compiler
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
