@@ -2,8 +2,6 @@ name: Release
 
 on:
   push:
-    tags:
-      - '*'
 
 jobs:
   build:
@@ -79,6 +77,7 @@ jobs:
       with:
         path: /opt/${{ matrix.target }}-cross
         key: "${{ matrix.target }}"
+        restore-keys: "${{ matrix.target }}"
     - name: setup cross compiler
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
@@ -87,19 +86,24 @@ jobs:
     - name: add compiler to PATH
       run: echo "/opt/${{ matrix.target }}-cross/bin/" >> $GITHUB_PATH
     - name: Echo gcc version
-      run: ${{ matrix.target }}-gcc --verbose
+      run: |
+        ${{ matrix.target }}-gcc --verbose
     - name: build binary
       run: |
         CFLAGS="-static -O2 -Wpedantic" ${{ env.CC }} main.c -o hello
     - name: strip binary
       run: |
         ${{ env.STRIP }} hello || true
+    - name: run tests
+      run: |
+        ./test.sh
     - name: rename binary for release
       run: |
         mv ${{ env.BIN_NAME }} ${{ env.RELEASE_BIN }}
         file ${{ env.RELEASE_BIN }}
     - name: Publish archives and packages
       uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
       with:
         files: "${{ env.RELEASE_BIN }}"
       env:
