@@ -94,9 +94,9 @@ jobs:
     - name: strip binary
       run: |
         ${{ env.STRIP }} hello || true
-    - name: run tests
-      run: |
-        ./test.sh
+        # - name: run tests
+        #   run: |
+        #     ./test.sh
     - name: rename binary for release
       run: |
         mv ${{ env.BIN_NAME }} ${{ env.RELEASE_BIN }}
