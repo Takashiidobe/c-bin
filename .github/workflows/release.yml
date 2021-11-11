@@ -21,13 +21,13 @@ jobs:
             "armv5l-linux-musleabi",
             "armv5l-linux-musleabihf",
             "armv6-linux-musleabi",
-            "armv6-linux-musleabihf",
+            # "armv6-linux-musleabihf",
             "armv7l-linux-musleabihf",
             "armv7m-linux-musleabi",
             "armv7r-linux-musleabihf",
             "i486-linux-musl",
             "i686-linux-musl",
-            "i686-w64-mingw32",
+            # "i686-w64-mingw32",
             "m68k-linux-musl",
             "microblaze-linux-musl",
             "microblazeel-linux-musl",
@@ -62,7 +62,7 @@ jobs:
             "sh4eb-linux-musl",
             "x86_64-linux-musl",
             "x86_64-linux-muslx32",
-            "x86_64-w64-mingw32"
+            # "x86_64-w64-mingw32"
           ]
     env:
       CC: ${{ matrix.target }}-gcc
