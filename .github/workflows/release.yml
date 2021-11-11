@@ -70,7 +70,6 @@ jobs:
       BIN_NAME: hello
       RELEASE_BIN: hello-${{ github.ref_name }}-${{ matrix.target }}
       TARGET_ZIP: ${{ matrix.target }}-cross.tgz
-      CFLAGS: "-no-pie -static --static -fPIE -static-pie"
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v2
@@ -91,7 +90,7 @@ jobs:
         ${{ matrix.target }}-gcc --verbose
     - name: build binary
       run: |
-        CFLAGS="${{ env.CFLAGS }}" ${{ env.CC }} main.c -o hello
+        ${{ env.CC }} -no-pie -static --static main.c -o hello
     - name: strip binary
       run: |
         ${{ env.STRIP }} hello || true
