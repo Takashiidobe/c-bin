@@ -12,7 +12,7 @@ jobs:
       matrix:
         target:
           [
-            aarch64-linux-musl
+            # aarch64-linux-musl
             # aarch64_be-linux-musl
             # arch64-linux-musl
             # arm-linux-musleabi
@@ -62,7 +62,7 @@ jobs:
             # sh2-linux-muslfdpic
             # sh4-linux-musl
             # sh4eb-linux-musl
-            # x86_64-linux-musl
+            x86_64-linux-musl
             # x86_64-linux-muslx32
             # x86_64-w64-mingw32
           ]
