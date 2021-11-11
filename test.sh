@@ -3,7 +3,7 @@
 assert() {
   expected="$1"
 
-	actual=$(exec	./hello)
+  actual=$(exec ./hello)
 
   if [ "$actual" = "$expected" ]; then
     echo "$expected => $actual"
