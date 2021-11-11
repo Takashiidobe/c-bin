@@ -77,8 +77,8 @@ jobs:
     - uses: actions/cache@v2
       id: cache
       with:
-        path: ./${{ env.TARGET_ZIP }}
-        key: ${{ env.TARGET_ZIP }}
+        path: ${{ env.TARGET_ZIP }}
+        key: ${{ matrix.target }}
     - name: Download cross compiler
       if: steps.cache.outputs.cache-hit != 'true'
       run: |
